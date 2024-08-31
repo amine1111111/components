@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" layer(bs);
+    </style>
+    <title>circle menu</title>
+
+</head>
+<body>
+
+
+    
+
+
+    <div class="menu-btn position-absolute d-flex flex-column align-items-end z-1" menu-btn>
+        <div class="up-line bg-white rounded-pill" style ="--line-w: 50%;"></div>
+        <div class="bottom-line bg-white rounded-pill" style =" --line-w: 65%;"></div>
+    </div>
+    
+    
+    
+    <aside class="text-uppercase fw-bold position-absolute d-flex overflow-hidden ">
+        <div>
+            <p><span style="--delay: 0s">index</span></p>
+            <p class="start-p align-self-center"><span style="--delay: .3s">work</span></p>
+            <p><span style="--delay: .6s">about</span></p>
+        </div>
+        <div>
+            <p><span>speaker</span></p>
+            <p><span>blog</span></p>
+            <p><span>contact</span></p>
+            <p><span>credits</span></p>
+        </div>
+    </aside>
+    <div class="circle position-absolute top-50 start-50 translate-middle bg-black z-n1" circle></div>
+    <div class="menu-btn position-absolute"></div>
+    
+    
+    
+    
+    <style>
+        :root {
+
+/* menu-btn  screen size media vars*/
+--menu-btn-pc-top : 5vh ; 
+--menu-btn-pc-right : 5vh ; 
+
+
+--menu-btn-phone-top : 5vh ; 
+--menu-btn-phone-right : 5vh ; 
+/* menu-btn  screen size media vars*/
+
+
+/* p space  screen size media vars*/
+--space : auto ;
+--no-space : 0 ;
+/* p space  screen size media vars*/
+
+
+/* 1st div  p  fs  screen size media vars*/
+--big-fs : 5rem ;
+--sm-fs : 2rem ;
+/* 1st div  p  fs  screen size media vars*/
+
+}
+
+::selection {
+  background: transparent;
+}
+
+
+.menu-btn {
+  --menu-btn-top : var(--menu-btn-pc-top); 
+  --menu-btn-right : var(--menu-btn-pc-right); 
+
+  --menu-btn-size : 2.5rem ;
+
+
+  top: var(--menu-btn-top);
+  right: var(--menu-btn-right);
+
+  width: var(--menu-btn-size);
+  height: var(--menu-btn-size);
+
+  :before,
+  :after {
+    --b-s : 130% ;
+    content: "";
+    position: absolute;
+    top: -40%;
+    width: var(--b-s);
+    height: var(--b-s);
+    border: 1px solid white;
+    border-radius: 75% 87% 62% 86%;
+    animation: rotate 10s ease infinite forwards;
+  }
+  :before {
+    left: 0%;
+  }
+  :after {
+    left: 5%;
+    rotate: 0.3turn;
+  }
+}
+@keyframes rotate {
+  to {
+      rotate: 1turn;
+  }
+}
+
+
+[class *="line"] {
+  width: var(--line-w);
+  height: 2px;
+}
+.bottom-line {
+  margin-top: 5px;
+}
+
+
+
+
+aside {
+  inset: 0;
+
+  > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  > div:first-child {
+
+    --first-child-font-size : var(--big-fs) ;
+    align-items: flex-end;
+    font-size: var(--first-child-font-size);
+  }
+  > div:last-child p:first-child,
+  > div:last-child p:last-child {
+   --p-space : var(--space);
+    margin-top: var(--p-space);
+  }
+  p {
+    padding: 1rem;
+    overflow: hidden;
+  }
+  p span {
+    display: inline-block;
+    translate: 0 200%;
+  }
+}
+.circle {
+  width: 100vw;
+  height: 100vh;
+  clip-path: circle(0%);
+  transition: all 1.5s ease;
+} 
+
+
+
+:where(aside p  , .menu-btn){
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media(width <= 768px){
+
+  .menu-btn {
+    --menu-btn-top : var(--menu-btn-phone-top); 
+    --menu-btn-right : var(--menu-btn-phone-right); 
+  }
+
+  aside {
+    flex-direction: column;
+    align-items: center;
+
+    > div:first-child {
+    --first-child-font-size : var(--sm-fs) ;
+      align-items: initial;
+    }
+
+    > div:last-child p:first-child,
+    > div:last-child p:last-child {
+      --p-space : var(--no-space);
+    }
+
+}
+
+}
+    </style>
+    
+  
+
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script> 
+  
+<script>
+    let tl = gsap.timeline();
+let btn = document.querySelector("[menu-btn]");
+let circle = document.querySelector("[circle]");
+
+btn.addEventListener("click", () => {
+    btn.classList.toggle("active");
+
+    if (btn.classList.contains("active")) {
+        tl.to("aside span", 1, {y: "0%",stagger: 0.1,ease: "power3.inOut"});
+        circle.style.clipPath = 'circle(100%)';
+    } else {
+        tl.to("aside span", 1, {y: "200%",stagger: 0.1,ease: "power3.inOut"});
+        circle.style.clipPath = 'circle(0%)';
+    }
+});
+</script>
+
+</body>
+</html>
